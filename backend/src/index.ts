@@ -8,6 +8,8 @@ import {serve} from "inngest/express"
 import { userSignup } from './inngest/functions/on-signup';
 import { onTicketCreated } from './inngest/functions/on-ticket-creation';
 import { Request, Response } from 'express';
+import {ticketRouter} from './routers/ticket.router';
+
 dotenv.config();
 const app = express();
 
@@ -21,6 +23,8 @@ app.get('/health', (req, res) => {
 });
 
 app.use("/user", userRouter)
+app.use("/ticket", ticketRouter);
+
 
 //Only start server when DB is connected
 app.use("/api/inngest", serve({
@@ -37,7 +41,7 @@ app.use("/", (req: Request, res: Response) => {
 const startServer = async () => {
     try {
         await connectDB();
-        app.listen(process.env.LOCALHOST_PORT, ()=> {
+        app.listen(process.env.LOCALHOST_PORT, () => {
             console.log(`The server is connected at ${process.env.LOCALHOST_PORT}`)
         })
     } catch (error) {

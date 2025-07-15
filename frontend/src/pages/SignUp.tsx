@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import type { SingupResponce } from '../types/api';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,6 +13,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -35,6 +38,7 @@ const SignUp = () => {
         const userInfo = responceObject.user;
         localStorage.setItem("user", JSON.stringify(userInfo));
         setSuccess(true);
+        navigate("/");
       }else{
         const failedMessage = responceObject.message;
         setError(failedMessage || "Failed to create account")

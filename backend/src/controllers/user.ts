@@ -67,7 +67,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
         const token = jwt.sign({_id: existingUser._id, role: existingUser.role, name: existingUser.name }, process.env.JWT_SECRET!, {expiresIn: "1d"});
         
-        res.status(200).json({success: true, token: token})
+        res.status(200).json({success: true, token: token, user:
+             {
+                name: existingUser.name, 
+                email: existingUser.email, 
+                role: existingUser.role, 
+                skills: existingUser.skills
+             }})
 
     } catch (error) {
         console.log("Error: ", error);

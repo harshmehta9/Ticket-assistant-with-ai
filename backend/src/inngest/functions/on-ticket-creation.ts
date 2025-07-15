@@ -60,10 +60,13 @@ export const onTicketCreated = inngest.createFunction(
                     }
                 );
                 
-                if(!matchModerator){
+                if(!matchModerator || matchModerator.length === 0){
                     matchModerator = await User.find({role: 'admin'});
                 }
-                await Ticket.findByIdAndUpdate(ticket._id, {assignedTo: matchModerator});
+                
+                if(matchModerator && matchModerator.length > 0){
+                    await Ticket.findByIdAndUpdate(ticket._id, {assignedTo: matchModerator[0]._id});
+                }
             })
 
         } catch (error) {

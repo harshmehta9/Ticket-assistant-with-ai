@@ -35,4 +35,4 @@ function CheckAuth({children, protectedRoute} : CheckAuthProps) {
   )
 }
 
-export default CheckAuth
+export default CheckAuth;
